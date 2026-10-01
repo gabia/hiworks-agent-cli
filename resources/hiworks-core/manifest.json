@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "coreVersion": "1.0.0",
+  "supportedPlatforms": [
+    "darwin-arm64",
+    "darwin-x64",
+    "linux-arm64",
+    "linux-x64"
+  ],
+  "piCompatibility": {
+    "minVersion": "0.85.1",
+    "executable": "pi"
+  },
+  "packages": [],
+  "mcp": {
+    "enabledByDefault": false,
+    "servers": []
+  },
+  "agents": {
+    "enabledByDefault": false
+  },
+  "resourcePaths": [
+    "skills/hiworks-development",
+    "extensions",
+    "prompts",
+    "agents",
+    "mcp"
+  ]
+}

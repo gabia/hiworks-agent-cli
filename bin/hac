@@ -1,0 +1,73 @@
+#!/bin/sh
+
+set -eu
+umask 077
+
+# Trust the OS certificate store as well as Node bundled roots (where supported).
+export NODE_USE_SYSTEM_CA=${NODE_USE_SYSTEM_CA:-1}
+
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+. "$script_dir/../lib/hac-env.sh"
+. "$script_dir/../lib/hac-json.sh"
+. "$script_dir/../lib/hac-lock.sh"
+. "$script_dir/../lib/hac-runtime.sh"
+. "$script_dir/../lib/hac-resources.sh"
+. "$script_dir/../lib/hac-packages.sh"
+. "$script_dir/../lib/hac-platform.sh"
+HAC_COMMANDS_FILE="$script_dir/hac"
+export HAC_COMMANDS_FILE
+. "$script_dir/../lib/hac-commands.sh"
+
+case "${1:-}" in
+    --help|-h|help)
+        hac_cmd_help
+        ;;
+    setup)
+        shift
+        exec node "$script_dir/../lib/hac-setup.mjs" "$@"
+        ;;
+    usage)
+        shift
+        if HAC_PI_EXECUTABLE=$(hac_pi_executable 2>/dev/null); then
+            export HAC_PI_EXECUTABLE
+        else
+            unset HAC_PI_EXECUTABLE
+        fi
+        exec node "$script_dir/../lib/hac-usage.mjs" "$@"
+        ;;
+    ai-hub)
+        shift
+        exec node "$script_dir/../lib/hac-ai-hub.mjs" "$@"
+        ;;
+    pi)
+        shift
+        hac_cmd_pi "$@"
+        ;;
+    uninstall)
+        shift
+        hac_cmd_uninstall "$@"
+        ;;
+    install)
+        shift
+        hac_cmd_install "$@"
+        ;;
+    update)
+        hac_cmd_update
+        ;;
+    doctor)
+        hac_cmd_doctor
+        ;;
+    version)
+        hac_cmd_version
+        ;;
+    '')
+        hac_cmd_run
+        ;;
+    --continue|-c)
+        hac_cmd_run --continue
+        ;;
+    *)
+        printf 'hac: unknown command: %s (see hac --help)\n' "$1" >&2
+        exit 2
+        ;;
+esac

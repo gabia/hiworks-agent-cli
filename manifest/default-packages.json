@@ -1,0 +1,3 @@
+{
+  "packages": ["npm:pi-superpowers-plus@0.4.1", "npm:pi-anthropic-oauth"]
+}

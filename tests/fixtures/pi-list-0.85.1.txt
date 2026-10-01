@@ -1,0 +1,2 @@
+npm:@example/required@1.2.3
+git:https://github.com/example/extension.git@0123456789abcdef0123456789abcdef01234567

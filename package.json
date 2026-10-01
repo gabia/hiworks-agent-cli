@@ -1,0 +1,17 @@
+{
+  "name": "hiworks-agent-cli-dev",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test:theme": "node --test tests/pi-theme/*.test.ts tests/test_branding.mjs",
+    "typecheck:theme": "tsc -p tsconfig.theme.json"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "0.87.1",
+    "@earendil-works/pi-ai": "0.87.1",
+    "@earendil-works/pi-tui": "0.87.1",
+    "@types/node": "22.15.30",
+    "typescript": "5.9.3"
+  }
+}

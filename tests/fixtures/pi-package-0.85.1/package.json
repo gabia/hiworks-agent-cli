@@ -1,0 +1,10 @@
+{
+  "name": "@mariozechner/pi-coding-agent",
+  "version": "0.85.1",
+  "bin": {
+    "pi": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=20.6.0"
+  }
+}

@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.*
+.idea/
+.pi/
+.DS_Store
+docs/USER-MANUAL.eml
+.superpowers/
+docs/superpowers/
+docs/LICENSE-REVIEW.md
+docs/license-inventory.json
+docs/images/

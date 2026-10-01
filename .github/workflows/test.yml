@@ -1,0 +1,37 @@
+name: hac tests
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Verify theme
+        run: |
+          npm ci --ignore-scripts
+          npm run test:theme
+          npm run typecheck:theme
+      - name: Install jq
+        run: |
+          if command -v brew >/dev/null 2>&1; then brew install jq; else sudo apt-get update && sudo apt-get install -y jq; fi
+      - name: Verify contracts
+        run: |
+          sh -n install.sh bin/hac lib/*.sh tests/*.sh
+          jq -e . manifest/core.json >/dev/null
+          git diff --check
+          sh tests/run.sh
+      - name: Verify smoke outcome without credentials
+        run: |
+          output=$(HAC_SMOKE_NPM_FIXTURE=tests/fixtures/pi-package-0.85.1 sh tests/smoke.sh)
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | grep '^PASS: automatic Pi smoke test$'
